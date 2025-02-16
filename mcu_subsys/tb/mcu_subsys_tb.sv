@@ -5,14 +5,16 @@ module mcu_subsys_tb;
 
     mcu_subsys_tb u_mcu_subsys_tb (
         .i_sys_clk(i_sys_clk),
-        .i_rst_n(i_rst_n)
+        .i_rst_n(i_rst_n),
+        .periph_mem_ready(1'b0),
+        .periph_mem_rdata(32'h0)
     );
 
     initial begin
         i_rst_n = 1'b0;
         #100;
         i_rst_n = 1'b1;
-        #200;
+        #1000;
         $finish;
     end
 
@@ -26,7 +28,7 @@ module mcu_subsys_tb;
 
     initial begin
         $dumpfile("mcu_subsys_tb.vcd");
-        $dumpvars(0);
+        $dumpvars();
     end
 
 endmodule // mcu_subsys_tb
