@@ -1,9 +1,9 @@
-module uart_ctrl_tb;
+module gpio_ctrl_tb;
 
     logic i_sys_clk;
     logic i_rst_n;
 
-    uart_ctrl_tb u_uart_ctrl_tb (
+    gpio_ctrl_tb u_gpio_ctrl_tb (
         .i_sys_clk(i_sys_clk),
         .i_rst_n(i_rst_n)
     );
@@ -25,8 +25,8 @@ module uart_ctrl_tb;
     end
 
     initial begin
-        $dumpfile("uart_ctrl_tb.vcd");
+        $dumpfile("gpio_ctrl_tb.vcd");
         $dumpvars(0);
     end
 
-endmodule // uart_ctrl_tb
+endmodule // gpio_ctrl_tb

@@ -1,10 +1,11 @@
-module uart_ctrl_tb;
+module spi_ctrl_tb;
 
     logic i_sys_clk;
     logic i_rst_n;
 
-    uart_ctrl_tb u_uart_ctrl_tb (
+    spi_ctrl_tb u_spi_ctrl_tb (
         .i_sys_clk(i_sys_clk),
+        .i_spi_clk(i_sys_clk),
         .i_rst_n(i_rst_n)
     );
 
@@ -25,8 +26,8 @@ module uart_ctrl_tb;
     end
 
     initial begin
-        $dumpfile("uart_ctrl_tb.vcd");
+        $dumpfile("spi_ctrl_tb.vcd");
         $dumpvars(0);
     end
 
-endmodule // uart_ctrl_tb
+endmodule // spi_ctrl_tb
