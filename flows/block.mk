@@ -12,9 +12,9 @@ VL_TB_LINT_ARGS := $(VL_LINT_COMMON_ARGS) --timing
 # Verilator simulation arguments
 VL_SIM_COMMON_ARGS := $(VL_COMMON_ARGS)
 ifeq ($(WAVE), vcd)
-VL_SIM_COMMON_ARGS += --trace
+VL_SIM_COMMON_ARGS += --trace --trace-structs
 else ifeq ($(WAVE), fst)
-VL_SIM_COMMON_ARGS += --trace-fst
+VL_SIM_COMMON_ARGS += --trace-fst --trace-structs
 endif
 ifeq ($(ASSERT), 1)
 VL_SIM_COMMON_ARGS += --assert
@@ -66,7 +66,7 @@ run-tb-sim: sim/$(TB_NAME)_obj_dir/V$(TB_NAME)
 # Generate CSR block RTL
 .PHONY: csr
 csr:
-	peakrdl regblock $(RDL_SRC) -o rtl/ --cpuif apb3-flat
+	peakrdl regblock $(RDL_SRC) -o rtl/ --cpuif apb4-flat
 
 # Clean
 .PHONY: clean
