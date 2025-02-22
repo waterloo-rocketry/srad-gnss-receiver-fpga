@@ -1,0 +1,27 @@
+addrmap gpio_ctrl_csr {
+    name = "GPIO Controller";
+    desc = "GPIO Controller CSRs";
+
+    default regwidth = 32;
+    default sw = rw;
+    default hw = r;
+
+    reg {
+        name = "Output Control Register";
+
+        field {
+            desc = "Output value";
+        } OVALUE[31:0] = 0;
+
+    } OUTPUT_CTRL @ 0x0;
+
+    reg {
+        name = "Input Status Register";
+
+        field {
+            desc = "Input value";
+            sw=r; hw=w;
+        } IVALUE[31:0];
+
+    } INPUT_STATUS @ 0x4;
+};

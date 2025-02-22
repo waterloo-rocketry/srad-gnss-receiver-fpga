@@ -63,6 +63,11 @@ build-tb-sim: sim/$(TB_NAME)_obj_dir/V$(TB_NAME)
 run-tb-sim: sim/$(TB_NAME)_obj_dir/V$(TB_NAME)
 	cd sim ; ./$(TB_NAME)_obj_dir/V$(TB_NAME) $(SIM_ARGS)
 
+# Generate CSR block RTL
+.PHONY: csr
+csr:
+	peakrdl regblock $(RDL_SRC) -o rtl/ --cpuif apb3-flat
+
 # Clean
 .PHONY: clean
 clean:
