@@ -16,6 +16,21 @@ module gpio_ctrl_tb;
 
     gpio_ctrl_top u_gpio_ctrl_top (.*);
 
+    clocking apb_clk @(posedge sys_clk);
+
+        output paddr;
+        output pwrite;
+        output psel;
+        output penable;
+        output pstrb;
+        output pwdata;
+
+        input  prdata;
+        input  pready;
+        input  pslverr;
+
+    endclocking // apb_clk
+
     initial begin
         rst_n = 1'b0;
 
@@ -32,30 +47,30 @@ module gpio_ctrl_tb;
         rst_n = 1'b1;
         #200;
 
-        @(posedge sys_clk);
-        paddr = 16'h0;
-        pwrite = 1'b1;
-        psel = 1'b1;
-        pwdata = 32'h12345678;
-        @(posedge sys_clk);
-        penable = 1'b1;
-        @(posedge sys_clk);
-        psel = 1'b0;
-        penable = 1'b0;
-        @(posedge sys_clk);
+        @apb_clk;
+        apb_clk.paddr <= 16'h0;
+        apb_clk.pwrite <= 1'b1;
+        apb_clk.psel <= 1'b1;
+        apb_clk.pwdata <= 32'h12345678;
+        @apb_clk;
+        apb_clk.penable <= 1'b1;
+        @apb_clk;
+        apb_clk.psel <= 1'b0;
+        apb_clk.penable <= 1'b0;
+        @apb_clk;
 
         #100;
 
-        @(posedge sys_clk);
-        paddr = 16'h8;
-        pwrite = 1'b0;
-        psel = 1'b1;
-        @(posedge sys_clk);
-        penable = 1'b1;
-        @(posedge sys_clk);
-        psel = 1'b0;
-        penable = 1'b0;
-        @(posedge sys_clk);
+        @apb_clk;
+        apb_clk.paddr <= 16'h8;
+        apb_clk.pwrite <= 1'b0;
+        apb_clk.psel <= 1'b1;
+        @apb_clk;
+        apb_clk.penable <= 1'b1;
+        @apb_clk;
+        apb_clk.psel <= 1'b0;
+        apb_clk.penable <= 1'b0;
+        @apb_clk;
 
         #200;
 
