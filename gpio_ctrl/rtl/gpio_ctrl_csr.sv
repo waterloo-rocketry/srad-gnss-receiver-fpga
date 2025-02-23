@@ -88,7 +88,7 @@ module gpio_ctrl_csr (
     //--------------------------------------------------------------------------
     // Address Decode
     //--------------------------------------------------------------------------
-    typedef struct packed {
+    typedef struct {
         logic OUTPUT_CTRL_VALUE;
         logic OUTPUT_CTRL_ENABLE;
         logic INPUT_STATUS;
@@ -114,15 +114,15 @@ module gpio_ctrl_csr (
     //--------------------------------------------------------------------------
     // Field logic
     //--------------------------------------------------------------------------
-    typedef struct packed {
-        struct packed {
-            struct packed {
+    typedef struct {
+        struct {
+            struct {
                 logic [31:0] next;
                 logic load_next;
             } OVALUE;
         } OUTPUT_CTRL_VALUE;
-        struct packed {
-            struct packed {
+        struct {
+            struct {
                 logic [31:0] next;
                 logic load_next;
             } OENABLE;
@@ -130,14 +130,14 @@ module gpio_ctrl_csr (
     } field_combo_t;
     field_combo_t field_combo;
 
-    typedef struct packed {
-        struct packed {
-            struct packed {
+    typedef struct {
+        struct {
+            struct {
                 logic [31:0] value;
             } OVALUE;
         } OUTPUT_CTRL_VALUE;
-        struct packed {
-            struct packed {
+        struct {
+            struct {
                 logic [31:0] value;
             } OENABLE;
         } OUTPUT_CTRL_ENABLE;
@@ -226,3 +226,5 @@ module gpio_ctrl_csr (
     assign cpuif_rd_data = readback_data;
     assign cpuif_rd_err = readback_err;
 endmodule
+
+/* verilator lint_on MULTIDRIVEN */

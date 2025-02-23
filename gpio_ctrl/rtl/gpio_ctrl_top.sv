@@ -37,7 +37,18 @@ module gpio_ctrl_top (
         .hwif_out(csr_out)
     );
 
+    logic [1:0] [31:0] sync_flops;
+
+    always_ff @(posedge sys_clk or negedge rst_n) begin
+        if(rst_n == 1'b0) begin
+            sync_flops <= 'h0;
+        end else begin
+            sync_flops[0] <= gpio_in;
+            sync_flops[1] <= sync_flops[0];
+        end
+    end
+
     assign gpio_out = csr_out.OUTPUT_CTRL_VALUE.OVALUE;
-    assign csr_in.INPUT_STATUS.IVALUE = gpio_in; // FIXME: sync
+    assign csr_in.INPUT_STATUS.IVALUE = sync_flops[1];
 
 endmodule // gpio_ctrl_top
