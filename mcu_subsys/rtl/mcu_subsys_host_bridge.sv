@@ -45,5 +45,43 @@ module mcu_subsys_host_bridge (
     assign sram_mem_wstrb = cpu_mem_wstrb;
     assign periph_mem_wstrb = cpu_mem_wstrb;
 
+    logic [1:0] read_mux_select;
+
+    // Decoder
+    always_comb begin
+        rom_mem_valid = 1'b0;
+        sram_mem_valid = 1'b0;
+        periph_mem_valid = 1'b0;
+
+        unique case (cpu_mem_addr[31:30])
+            2'b00: begin
+                rom_mem_valid = cpu_mem_valid;
+            end
+            2'b01: begin
+                sram_mem_valid = cpu_mem_valid;
+            end
+            default: begin
+                periph_mem_valid = cpu_mem_valid;
+            end
+        endcase // unique case (cpu_mem_addr[31:31])
+    end
+
+    // Read Mux
+    always_comb begin
+        unique case (cpu_mem_addr[31:30])
+            2'b00: begin
+                cpu_mem_ready = rom_mem_ready;
+                cpu_mem_rdata = rom_mem_rdata;
+            end
+            2'b01: begin
+                cpu_mem_ready = sram_mem_ready;
+                cpu_mem_rdata = sram_mem_rdata;
+            end
+            default: begin
+                cpu_mem_ready = periph_mem_ready;
+                cpu_mem_rdata = periph_mem_rdata;
+            end
+        endcase // unique case (cpu_mem_addr[31:30])
+    end
 
 endmodule // mcu_subsys_host_bridge

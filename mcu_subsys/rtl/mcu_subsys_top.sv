@@ -35,7 +35,9 @@ module mcu_subsys_top (
     logic [3:0]   sram_mem_wstrb;
     logic [31:0]  sram_mem_rdata;
 
-    picorv32 u_picorv32 (
+    picorv32 #(
+        .PROGADDR_RESET(32'h00000080)
+    ) u_picorv32 (
         // Clock and reset
         .clk(sys_clk),
         .resetn(rst_n),
