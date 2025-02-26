@@ -16,4 +16,7 @@ VERIF_REPO_DEP :=
 # RTL Top level module name
 RTL_TOP_NAME := gpio_ctrl_top
 
+# SystemRDL CSR Source
+RDL_SRC := csr/gpio_ctrl_csr.rdl
+
 include ../flows/block.mk
