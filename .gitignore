@@ -1,1 +1,4 @@
 sim
+*.o
+*.elf
+*.bin
