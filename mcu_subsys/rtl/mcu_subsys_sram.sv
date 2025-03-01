@@ -15,14 +15,14 @@ module mcu_subsys_sram (
             mem_ready <= 1'b0;
             mem_rdata <= 32'h0;
         end else begin
-            mem_rdata <= mem[mem_addr[7:0]];
+            mem_rdata <= mem[mem_addr[9:2]];
 
             if(mem_valid) begin
                 mem_ready <= 1'b1;
-                if(mem_wstrb[0]) mem[mem_addr[7:0]][7:0] <= mem_wdata[7:0];
-                if(mem_wstrb[1]) mem[mem_addr[7:0]][15:8] <= mem_wdata[15:8];
-                if(mem_wstrb[2]) mem[mem_addr[7:0]][23:16] <= mem_wdata[23:16];
-                if(mem_wstrb[3]) mem[mem_addr[7:0]][31:24] <= mem_wdata[31:24];
+                if(mem_wstrb[0]) mem[mem_addr[9:2]][7:0] <= mem_wdata[7:0];
+                if(mem_wstrb[1]) mem[mem_addr[9:2]][15:8] <= mem_wdata[15:8];
+                if(mem_wstrb[2]) mem[mem_addr[9:2]][23:16] <= mem_wdata[23:16];
+                if(mem_wstrb[3]) mem[mem_addr[9:2]][31:24] <= mem_wdata[31:24];
             end else begin
                 mem_ready <= 1'b0;
             end
