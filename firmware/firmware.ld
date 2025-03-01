@@ -1,28 +1,30 @@
 ENTRY(_start)
 
 MEMORY
-{	
+{    
     bootrom (rx)  : ORIGIN = 0x0, LENGTH = 64K
-    sram (rw) : ORIGIN = 0x4000000, LENGTH = 64K
+    sram (rw) : ORIGIN = 0x40000000, LENGTH = 64K
 }
 
 SECTIONS
 {
-	. = ORIGIN(bootrom);
+    . = ORIGIN(bootrom);
     .text : 
     {
         *(.text.start)
-		*(.text)
-		*(.srodata)
+        *(.text)
+        *(.srodata)
     }
-	. = ORIGIN(sram);
-	.data :
-	{
-		*(.sdata)
-		*(.sbss)
-	}
-	/DISCARD/ :
-	{
-		*
-	}	
+    . = ORIGIN(sram);
+    .data :
+    {
+        *(.data)
+        *(.bss)
+        *(.sdata)
+        *(.sbss)
+    }
+    /DISCARD/ :
+    {
+        *
+    }
 }
