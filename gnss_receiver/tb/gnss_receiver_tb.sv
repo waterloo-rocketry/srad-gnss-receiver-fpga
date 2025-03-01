@@ -1,24 +1,18 @@
-module mcu_subsys_tb;
+module gnss_receiver_tb;
 
     logic sys_clk;
     logic rst_n;
 
-    mcu_subsys_top u_mcu_subsys_top (
+    gnss_receiver_top u_gnss_receiver_top (
         .sys_clk(sys_clk),
-        .rst_n(rst_n),
-        .periph_mem_valid(),
-        .periph_mem_ready(1'b0),
-        .periph_mem_addr(),
-        .periph_mem_wdata(),
-        .periph_mem_wstrb(),
-        .periph_mem_rdata(32'h0)
+        .rst_n(rst_n)
     );
 
     initial begin
         rst_n = 1'b0;
         #100;
         rst_n = 1'b1;
-        #1000;
+        #5000000;
         $finish;
     end
 
@@ -31,8 +25,8 @@ module mcu_subsys_tb;
     end
 
     initial begin
-        $dumpfile("mcu_subsys_tb.vcd");
+        $dumpfile("gnss_receiver_tb.vcd");
         $dumpvars();
     end
 
-endmodule // mcu_subsys_tb
+endmodule // gnss_receiver_tb
