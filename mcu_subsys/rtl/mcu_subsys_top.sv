@@ -99,7 +99,6 @@ module mcu_subsys_top (
 
     mcu_subsys_sram u_sram (
         .clk(sys_clk),
-        .rst_n(rst_n),
         .mem_valid(sram_mem_valid),
         .mem_ready(sram_mem_ready),
         .mem_addr(sram_mem_addr),

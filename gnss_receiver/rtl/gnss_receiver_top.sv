@@ -26,7 +26,6 @@ module gnss_receiver_top (
 
     mcu_subsys_sram u_fake_periph (
         .clk(sys_clk),
-        .rst_n(rst_n),
         .mem_valid(periph_mem_valid),
         .mem_ready(periph_mem_ready),
         .mem_addr(periph_mem_addr),

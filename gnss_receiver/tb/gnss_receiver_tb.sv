@@ -12,7 +12,7 @@ module gnss_receiver_tb;
         rst_n = 1'b0;
         #100;
         rst_n = 1'b1;
-        #10000000;
+        #5000000;
         $finish;
     end
 
