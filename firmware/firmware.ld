@@ -18,6 +18,8 @@ SECTIONS
 	. = ORIGIN(sram);
 	.data :
 	{
+		*(.data)
+		*(.bss)
 		*(.sdata)
 		*(.sbss)
 	}
