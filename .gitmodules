@@ -4,3 +4,6 @@
 [submodule "firmware/canlib"]
 	path = firmware/canlib
 	url = https://github.com/waterloo-rocketry/canlib.git
+[submodule "mcu_subsys/ip/ibex"]
+	path = mcu_subsys/ip/ibex
+	url = https://github.com/lowRISC/ibex.git

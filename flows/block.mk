@@ -10,7 +10,7 @@ VL_RTL_LINT_ARGS := $(VL_LINT_COMMON_ARGS) --no-timing
 VL_TB_LINT_ARGS := $(VL_LINT_COMMON_ARGS) --timing
 
 # Verilator simulation arguments
-VL_SIM_COMMON_ARGS := $(VL_COMMON_ARGS)
+VL_SIM_COMMON_ARGS := $(VL_COMMON_ARGS) -Wno-fatal
 ifeq ($(WAVE), vcd)
 VL_SIM_COMMON_ARGS += --trace --trace-structs
 else ifeq ($(WAVE), fst)
