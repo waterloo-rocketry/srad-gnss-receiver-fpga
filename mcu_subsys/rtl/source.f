@@ -14,7 +14,26 @@
 ../ip/ibex/dv/uvm/core_ibex/common/prim/prim_buf.sv
 ../ip/ibex/vendor/lowrisc_ip/ip/prim_generic/rtl/prim_generic_buf.sv
 
--y ../ip/ibex/rtl/
+../ip/ibex/rtl/ibex_top.sv
+../ip/ibex/rtl/ibex_core.sv
+../ip/ibex/rtl/ibex_register_file_ff.sv
+../ip/ibex/rtl/ibex_cs_registers.sv
+../ip/ibex/rtl/ibex_pmp.sv
+../ip/ibex/rtl/ibex_if_stage.sv
+../ip/ibex/rtl/ibex_csr.sv
+../ip/ibex/rtl/ibex_dummy_instr.sv
+../ip/ibex/rtl/ibex_counter.sv
+../ip/ibex/rtl/ibex_prefetch_buffer.sv
+../ip/ibex/rtl/ibex_compressed_decoder.sv
+../ip/ibex/rtl/ibex_id_stage.sv
+../ip/ibex/rtl/ibex_ex_block.sv
+../ip/ibex/rtl/ibex_load_store_unit.sv
+../ip/ibex/rtl/ibex_wb_stage.sv
+../ip/ibex/rtl/ibex_alu.sv
+../ip/ibex/rtl/ibex_multdiv_fast.sv
+../ip/ibex/rtl/ibex_decoder.sv
+../ip/ibex/rtl/ibex_controller.sv
+../ip/ibex/rtl/ibex_fetch_fifo.sv
 
 mcu_subsys_host_bridge.sv
 mcu_subsys_rom.sv
