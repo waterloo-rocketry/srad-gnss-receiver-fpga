@@ -1,6 +1,3 @@
-[submodule "mcu_subsys/ip/picorv32"]
-	path = mcu_subsys/ip/picorv32
-	url = https://github.com/YosysHQ/picorv32.git
 [submodule "firmware/canlib"]
 	path = firmware/canlib
 	url = https://github.com/waterloo-rocketry/canlib.git
