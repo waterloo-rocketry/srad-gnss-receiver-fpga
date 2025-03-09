@@ -91,20 +91,20 @@ module mcu_subsys_host_bridge (
         endcase // unique case (cpu_mem_addr[31:30])
     end // always_comb
 
-    // Only assert ready when there's an outstanding read request
-    logic read_active;
+    // Only assert ready when there's an outstanding transaction
+    logic trans_active;
     always_ff @(posedge sys_clk or negedge rst_n) begin
         if(!rst_n) begin
-            read_active <= 1'b0;
+            trans_active <= 1'b0;
         end else begin
             if(cpu_mem_valid) begin
-                read_active <= 1'b1;
-            end else begin
-                read_active <= 1'b0;
+                trans_active <= 1'b1;
+            end else if(muxed_ready) begin
+                trans_active <= 1'b0;
             end
         end
     end // always_ff @ (posedge sys_clk or negedge rst_n)
 
-    assign cpu_mem_ready = muxed_ready & read_active;
+    assign cpu_mem_ready = muxed_ready & trans_active;
 
 endmodule // mcu_subsys_host_bridge
