@@ -7,7 +7,8 @@ module mcu_subsys_host_bridge (
     output logic        cpu_mem_ready,
     input logic [31:0]  cpu_mem_addr,
     input logic [31:0]  cpu_mem_wdata,
-    input logic [3:0]   cpu_mem_wstrb,
+    input logic         cpu_mem_we,
+    input logic [3:0]   cpu_mem_be,
     output logic [31:0] cpu_mem_rdata,
     // ROM Memory Interface
     output logic        rom_mem_valid,
@@ -31,6 +32,10 @@ module mcu_subsys_host_bridge (
     output logic [3:0]  periph_mem_wstrb,
     input logic [31:0]  periph_mem_rdata
 );
+
+    // Write Strobe
+    logic [3:0] cpu_mem_wstrb;
+    assign cpu_mem_wstrb = cpu_mem_we ? cpu_mem_be : 4'h0;
 
     // Pass-through signals
     assign rom_mem_addr = cpu_mem_addr;
@@ -66,22 +71,40 @@ module mcu_subsys_host_bridge (
         endcase // unique case (cpu_mem_addr[31:31])
     end
 
+    logic muxed_ready;
+
     // Read Mux
     always_comb begin
         unique case (cpu_mem_addr[31:30])
             2'b00: begin
-                cpu_mem_ready = rom_mem_ready;
+                muxed_ready = rom_mem_ready;
                 cpu_mem_rdata = rom_mem_rdata;
             end
             2'b01: begin
-                cpu_mem_ready = sram_mem_ready;
+                muxed_ready = sram_mem_ready;
                 cpu_mem_rdata = sram_mem_rdata;
             end
             default: begin
-                cpu_mem_ready = periph_mem_ready;
+                muxed_ready = periph_mem_ready;
                 cpu_mem_rdata = periph_mem_rdata;
             end
         endcase // unique case (cpu_mem_addr[31:30])
-    end
+    end // always_comb
+
+    // Only assert ready when there's an outstanding transaction
+    logic trans_active;
+    always_ff @(posedge sys_clk or negedge rst_n) begin
+        if(!rst_n) begin
+            trans_active <= 1'b0;
+        end else begin
+            if(cpu_mem_valid) begin
+                trans_active <= 1'b1;
+            end else if(muxed_ready) begin
+                trans_active <= 1'b0;
+            end
+        end
+    end // always_ff @ (posedge sys_clk or negedge rst_n)
+
+    assign cpu_mem_ready = muxed_ready & trans_active;
 
 endmodule // mcu_subsys_host_bridge
