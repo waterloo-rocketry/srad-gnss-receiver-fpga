@@ -16,6 +16,9 @@ VERIF_REPO_DEP :=
 # RTL Top level module name
 RTL_TOP_NAME := apb_bridge_top
 
+# Testbench name
+TB_NAME := apb_bridge_tb
+
 # SystemRDL CSR Source
 RDL_SRC := 
 
