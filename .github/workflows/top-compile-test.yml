@@ -1,0 +1,19 @@
+name: Top Level Compile Check
+
+# Runs on pushes to pull request
+on: pull_request
+
+jobs:
+  build:
+    name: Top Level Compile Test
+    runs-on: ubuntu-latest
+    steps:
+      - uses: actions/checkout@v4
+        with:
+          submodules: 'true'
+	  - name: Install Verilator
+        run: |
+          sudo apt install verilator
+      - name: Top Level Compile Test
+        run: make run-tb-sim TB_NAME=gnss_receiver_tb
+        working-directory: gnss_receiver
