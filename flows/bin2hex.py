@@ -5,8 +5,8 @@ import sys
 def main():
     word_remaining = 16 * 1024
 
-    with open('fw.bin', mode='rb') as binfile:
-        with open('fw.hex', mode='w') as hexfile:
+    with open(sys.argv[1], mode='rb') as binfile:
+        with open(sys.argv[2], mode='w') as hexfile:
             while word := binfile.read(4):
                 hex_data = ''.join(f'{byte:02X}' for byte in word[::-1])
                 hexfile.write(hex_data + '\n')
