@@ -20,11 +20,20 @@ CFLAGS := \
     -Ilibc \
     -Icanlib
 
-fw.hex: fw.bin
-	../flows/bin2hex.py
+.PHONY: all
+all: fw-text.hex fw-data.hex
 
-fw.bin: fw.elf
-	riscv32-elf-objcopy -O binary --only-section=.text fw.elf fw.bin
+fw-text.hex: fw-text.bin
+	../flows/bin2hex.py fw-text.bin fw-text.hex
+
+fw-text.bin: fw.elf
+	riscv32-elf-objcopy -O binary --only-section=.text fw.elf fw-text.bin
+
+fw-data.hex: fw-data.bin
+	../flows/bin2hex.py fw-data.bin fw-data.hex
+
+fw-data.bin: fw.elf
+	riscv32-elf-objcopy -O binary --only-section=.data fw.elf fw-data.bin
 
 fw.elf: $(OBJS) firmware.ld
 	riscv32-elf-ld -T firmware.ld $(OBJS) -o fw.elf

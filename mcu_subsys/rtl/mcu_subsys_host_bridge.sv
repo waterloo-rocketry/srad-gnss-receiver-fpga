@@ -65,8 +65,10 @@ module mcu_subsys_host_bridge (
             2'b01: begin
                 sram_mem_valid = cpu_mem_valid;
             end
-            default: begin
+            2'b10: begin
                 periph_mem_valid = cpu_mem_valid;
+            end
+            default: begin
             end
         endcase // unique case (cpu_mem_addr[31:31])
     end
@@ -84,9 +86,13 @@ module mcu_subsys_host_bridge (
                 muxed_ready = sram_mem_ready;
                 cpu_mem_rdata = sram_mem_rdata;
             end
-            default: begin
+            2'b10: begin
                 muxed_ready = periph_mem_ready;
                 cpu_mem_rdata = periph_mem_rdata;
+            end
+            default: begin
+                muxed_ready = 1'b1;
+                cpu_mem_rdata = 32'h00000000;
             end
         endcase // unique case (cpu_mem_addr[31:30])
     end // always_comb
