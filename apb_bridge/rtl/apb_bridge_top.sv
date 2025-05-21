@@ -27,181 +27,15 @@ module apb_bridge_top (
     output logic [31:0] host_rdata,     // Transaction read data
 
     // APB Master Interfaces (to 16 Peripherals)
-    // Slave 0 - Address range when bits [27:24] = 4'h0
-    output logic [23:0] apb_paddr0,     // APB address bus
-    output logic        apb_pwrite0,    // Write enable (1=write, 0=read)
-    output logic        apb_psel0,      // Peripheral select
-    output logic        apb_penable0,   // Enable signal
-    output logic [3:0]  apb_pstrb0,     // Write strobes
-    output logic [31:0] apb_pwdata0,    // Write data bus
-    input  logic [31:0] apb_prdata0,    // Read data bus
-    input  logic        apb_pready0,    // Ready signal from slave
-    input  logic        apb_pslverr0,   // Slave error response
-
-    // Slave 1 - Address range when bits [27:24] = 4'h1
-    output logic [23:0] apb_paddr1,     // APB address bus
-    output logic        apb_pwrite1,    // Write enable
-    output logic        apb_psel1,      // Peripheral select
-    output logic        apb_penable1,   // Enable signal
-    output logic [3:0]  apb_pstrb1,     // Write strobes
-    output logic [31:0] apb_pwdata1,    // Write data bus
-    input  logic [31:0] apb_prdata1,    // Read data bus
-    input  logic        apb_pready1,    // Ready signal from slave
-    input  logic        apb_pslverr1,   // Slave error response
-
-    // Slave 2 - Address range when bits [27:24] = 4'h2
-    output logic [23:0] apb_paddr2,     // APB address bus
-    output logic        apb_pwrite2,    // Write enable
-    output logic        apb_psel2,      // Peripheral select
-    output logic        apb_penable2,   // Enable signal
-    output logic [3:0]  apb_pstrb2,     // Write strobes
-    output logic [31:0] apb_pwdata2,    // Write data bus
-    input  logic [31:0] apb_prdata2,    // Read data bus
-    input  logic        apb_pready2,    // Ready signal from slave
-    input  logic        apb_pslverr2,   // Slave error response
-
-    // Slave 3 - Address range when bits [27:24] = 4'h3
-    output logic [23:0] apb_paddr3,     // APB address bus
-    output logic        apb_pwrite3,    // Write enable
-    output logic        apb_psel3,      // Peripheral select
-    output logic        apb_penable3,   // Enable signal
-    output logic [3:0]  apb_pstrb3,     // Write strobes
-    output logic [31:0] apb_pwdata3,    // Write data bus
-    input  logic [31:0] apb_prdata3,    // Read data bus
-    input  logic        apb_pready3,    // Ready signal from slave
-    input  logic        apb_pslverr3,   // Slave error response
-
-    // Slave 4 - Address range when bits [27:24] = 4'h4
-    output logic [23:0] apb_paddr4,     // APB address bus
-    output logic        apb_pwrite4,    // Write enable
-    output logic        apb_psel4,      // Peripheral select
-    output logic        apb_penable4,   // Enable signal
-    output logic [3:0]  apb_pstrb4,     // Write strobes
-    output logic [31:0] apb_pwdata4,    // Write data bus
-    input  logic [31:0] apb_prdata4,    // Read data bus
-    input  logic        apb_pready4,    // Ready signal from slave
-    input  logic        apb_pslverr4,   // Slave error response
-
-    // Slave 5 - Address range when bits [27:24] = 4'h5
-    output logic [23:0] apb_paddr5,     // APB address bus
-    output logic        apb_pwrite5,    // Write enable
-    output logic        apb_psel5,      // Peripheral select
-    output logic        apb_penable5,   // Enable signal
-    output logic [3:0]  apb_pstrb5,     // Write strobes
-    output logic [31:0] apb_pwdata5,    // Write data bus
-    input  logic [31:0] apb_prdata5,    // Read data bus
-    input  logic        apb_pready5,    // Ready signal from slave
-    input  logic        apb_pslverr5,   // Slave error response
-
-    // Slave 6 - Address range when bits [27:24] = 4'h6
-    output logic [23:0] apb_paddr6,     // APB address bus
-    output logic        apb_pwrite6,    // Write enable
-    output logic        apb_psel6,      // Peripheral select
-    output logic        apb_penable6,   // Enable signal
-    output logic [3:0]  apb_pstrb6,     // Write strobes
-    output logic [31:0] apb_pwdata6,    // Write data bus
-    input  logic [31:0] apb_prdata6,    // Read data bus
-    input  logic        apb_pready6,    // Ready signal from slave
-    input  logic        apb_pslverr6,   // Slave error response
-
-    // Slave 7 - Address range when bits [27:24] = 4'h7
-    output logic [23:0] apb_paddr7,     // APB address bus
-    output logic        apb_pwrite7,    // Write enable
-    output logic        apb_psel7,      // Peripheral select
-    output logic        apb_penable7,   // Enable signal
-    output logic [3:0]  apb_pstrb7,     // Write strobes
-    output logic [31:0] apb_pwdata7,    // Write data bus
-    input  logic [31:0] apb_prdata7,    // Read data bus
-    input  logic        apb_pready7,    // Ready signal from slave
-    input  logic        apb_pslverr7,   // Slave error response
-
-    // Slave 8 - Address range when bits [27:24] = 4'h8
-    output logic [23:0] apb_paddr8,     // APB address bus
-    output logic        apb_pwrite8,    // Write enable
-    output logic        apb_psel8,      // Peripheral select
-    output logic        apb_penable8,   // Enable signal
-    output logic [3:0]  apb_pstrb8,     // Write strobes
-    output logic [31:0] apb_pwdata8,    // Write data bus
-    input  logic [31:0] apb_prdata8,    // Read data bus
-    input  logic        apb_pready8,    // Ready signal from slave
-    input  logic        apb_pslverr8,   // Slave error response
-
-    // Slave 9 - Address range when bits [27:24] = 4'h9
-    output logic [23:0] apb_paddr9,     // APB address bus
-    output logic        apb_pwrite9,    // Write enable
-    output logic        apb_psel9,      // Peripheral select
-    output logic        apb_penable9,   // Enable signal
-    output logic [3:0]  apb_pstrb9,     // Write strobes
-    output logic [31:0] apb_pwdata9,    // Write data bus
-    input  logic [31:0] apb_prdata9,    // Read data bus
-    input  logic        apb_pready9,    // Ready signal from slave
-    input  logic        apb_pslverr9,   // Slave error response
-
-    // Slave 10 - Address range when bits [27:24] = 4'hA
-    output logic [23:0] apb_paddr10,    // APB address bus
-    output logic        apb_pwrite10,    // Write enable
-    output logic        apb_psel10,      // Peripheral select
-    output logic        apb_penable10,    // Enable signal
-    output logic [3:0]  apb_pstrb10,     // Write strobes
-    output logic [31:0] apb_pwdata10,    // Write data bus
-    input  logic [31:0] apb_prdata10,    // Read data bus
-    input  logic        apb_pready10,    // Ready signal from slave
-    input  logic        apb_pslverr10,    // Slave error response
-
-    // Slave 11 - Address range when bits [27:24] = 4'hB
-    output logic [23:0] apb_paddr11,     // APB address bus
-    output logic        apb_pwrite11,     // Write enable
-    output logic        apb_psel11,       // Peripheral select
-    output logic        apb_penable11,     // Enable signal
-    output logic [3:0]  apb_pstrb11,      // Write strobes
-    output logic [31:0] apb_pwdata11,      // Write data bus
-    input  logic [31:0] apb_prdata11,      // Read data bus
-    input  logic        apb_pready11,      // Ready signal from slave
-    input  logic        apb_pslverr11,      // Slave error response
-
-    // Slave 12 - Address range when bits [27:24] = 4'hC
-    output logic [23:0] apb_paddr12,      // APB address bus
-    output logic        apb_pwrite12,      // Write enable
-    output logic        apb_psel12,        // Peripheral select
-    output logic        apb_penable12,      // Enable signal
-    output logic [3:0]  apb_pstrb12,        // Write strobes
-    output logic [31:0] apb_pwdata12,        // Write data bus
-    input  logic [31:0] apb_prdata12,        // Read data bus
-    input  logic        apb_pready12,        // Ready signal from slave
-    input  logic        apb_pslverr12,        // Slave error response
-
-    // Slave 13 - Address range when bits [27:24] = 4'hD
-    output logic [23:0] apb_paddr13,      // APB address bus
-    output logic        apb_pwrite13,      // Write enable
-    output logic        apb_psel13,         // Peripheral select
-    output logic        apb_penable13,       // Enable signal
-    output logic [3:0]  apb_pstrb13,         // Write strobes
-    output logic [31:0] apb_pwdata13,         // Write data bus
-    input  logic [31:0] apb_prdata13,         // Read data bus
-    input  logic        apb_pready13,         // Ready signal from slave
-    input  logic        apb_pslverr13,         // Slave error response
-
-    // Slave 14 - Address range when bits [27:24] = 4'hE
-    output logic [23:0] apb_paddr14,      // APB address bus
-    output logic        apb_pwrite14,      // Write enable
-    output logic        apb_psel14,         // Peripheral select
-    output logic        apb_penable14,       // Enable signal
-    output logic [3:0]  apb_pstrb14,         // Write strobes
-    output logic [31:0] apb_pwdata14,         // Write data bus
-    input  logic [31:0] apb_prdata14,         // Read data bus
-    input  logic        apb_pready14,         // Ready signal from slave
-    input  logic        apb_pslverr14,         // Slave error response
-
-    // Slave 15 - Address range when bits [27:24] = 4'hF
-    output logic [23:0] apb_paddr15,      // APB address bus
-    output logic        apb_pwrite15,      // Write enable
-    output logic        apb_psel15,         // Peripheral select
-    output logic        apb_penable15,       // Enable signal
-    output logic [3:0]  apb_pstrb15,         // Write strobes
-    output logic [31:0] apb_pwdata15,         // Write data bus
-    input  logic [31:0] apb_prdata15,         // Read data bus
-    input  logic        apb_pready15,         // Ready signal from slave
-    input  logic        apb_pslverr15         // Slave error response
+    output logic [23:0] apb_paddr   [15:0], // APB address bus
+    output logic        apb_pwrite  [15:0], // Write enable (1=write, 0=read)
+    output logic        apb_psel    [15:0], // Peripheral select
+    output logic        apb_penable [15:0], // Enable signal
+    output logic [3:0]  apb_pstrb   [15:0], // Write strobes
+    output logic [31:0] apb_pwdata  [15:0], // Write data bus
+    input  logic [31:0] apb_prdata  [15:0], // Read data bus
+    input  logic        apb_pready  [15:0], // Ready signal from slave
+    input  logic        apb_pslverr [15:0]  // Slave error response
 );
 
     // -----------------------------------------------------------------------
@@ -338,44 +172,14 @@ module apb_bridge_top (
     // -----------------------------------------------------------------------
     always_comb begin
         // Default - no slave selected
-        apb_psel0 = 1'b0;
-        apb_psel1 = 1'b0;
-        apb_psel2 = 1'b0;
-        apb_psel3 = 1'b0;
-        apb_psel4 = 1'b0;
-        apb_psel5 = 1'b0;
-        apb_psel6 = 1'b0;
-        apb_psel7 = 1'b0;
-        apb_psel8 = 1'b0;
-        apb_psel9 = 1'b0;
-        apb_psel10 = 1'b0;
-        apb_psel11 = 1'b0;
-        apb_psel12 = 1'b0;
-        apb_psel13 = 1'b0;
-        apb_psel14 = 1'b0;
-        apb_psel15 = 1'b0;
+        for (int i = 0; i < 16; i++) begin
+            apb_psel[i] = 1'b0;
+        end
         
         // Only select a slave during SETUP or ACCESS states
         // and only if the slave selection is valid
         if ((curr_state == SETUP || curr_state == ACCESS) && valid_slave_sel) begin
-            case (slave_sel)
-                4'h0: apb_psel0 = 1'b1;   // Select slave 0
-                4'h1: apb_psel1 = 1'b1;   // Select slave 1
-                4'h2: apb_psel2 = 1'b1;   // Select slave 2
-                4'h3: apb_psel3 = 1'b1;   // Select slave 3
-                4'h4: apb_psel4 = 1'b1;   // Select slave 4
-                4'h5: apb_psel5 = 1'b1;   // Select slave 5
-                4'h6: apb_psel6 = 1'b1;   // Select slave 6
-                4'h7: apb_psel7 = 1'b1;   // Select slave 7
-                4'h8: apb_psel8 = 1'b1;   // Select slave 8
-                4'h9: apb_psel9 = 1'b1;   // Select slave 9
-                4'hA: apb_psel10 = 1'b1;  // Select slave 10
-                4'hB: apb_psel11 = 1'b1;  // Select slave 11
-                4'hC: apb_psel12 = 1'b1;  // Select slave 12
-                4'hD: apb_psel13 = 1'b1;  // Select slave 13
-                4'hE: apb_psel14 = 1'b1;  // Select slave 14
-                4'hF: apb_psel15 = 1'b1;  // Select slave 15
-            endcase
+            apb_psel[slave_sel] = 1'b1; // Select the target slave
         end
     end
     
@@ -390,22 +194,14 @@ module apb_bridge_top (
     assign apb_penable_common = (curr_state == ACCESS);
     
     // Assign the common enable signal to all slaves
-    assign apb_penable0 = apb_penable_common;
-    assign apb_penable1 = apb_penable_common;
-    assign apb_penable2 = apb_penable_common;
-    assign apb_penable3 = apb_penable_common;
-    assign apb_penable4 = apb_penable_common;
-    assign apb_penable5 = apb_penable_common;
-    assign apb_penable6 = apb_penable_common;
-    assign apb_penable7 = apb_penable_common;
-    assign apb_penable8 = apb_penable_common;
-    assign apb_penable9 = apb_penable_common;
-    assign apb_penable10 = apb_penable_common;
-    assign apb_penable11 = apb_penable_common;
-    assign apb_penable12 = apb_penable_common;
-    assign apb_penable13 = apb_penable_common;
-    assign apb_penable14 = apb_penable_common;
-    assign apb_penable15 = apb_penable_common;
+    // This can be simplified if all peripherals share the same enable logic,
+    // but individual assignment allows for future flexibility if needed.
+    // For now, we will assign it to all.
+    always_comb begin
+        for (int i = 0; i < 16; i++) begin
+            apb_penable[i] = apb_penable_common;
+        end
+    end
     
     // -----------------------------------------------------------------------
     // Common Control Signal Distribution
@@ -419,44 +215,22 @@ module apb_bridge_top (
     assign apb_paddr_common = host_addr_r[23:0];
     
     // Distribute common address to all slaves
-    assign apb_paddr0 = apb_paddr_common;
-    assign apb_paddr1 = apb_paddr_common;
-    assign apb_paddr2 = apb_paddr_common;
-    assign apb_paddr3 = apb_paddr_common;
-    assign apb_paddr4 = apb_paddr_common;
-    assign apb_paddr5 = apb_paddr_common;
-    assign apb_paddr6 = apb_paddr_common;
-    assign apb_paddr7 = apb_paddr_common;
-    assign apb_paddr8 = apb_paddr_common;
-    assign apb_paddr9 = apb_paddr_common;
-    assign apb_paddr10 = apb_paddr_common;
-    assign apb_paddr11 = apb_paddr_common;
-    assign apb_paddr12 = apb_paddr_common;
-    assign apb_paddr13 = apb_paddr_common;
-    assign apb_paddr14 = apb_paddr_common;
-    assign apb_paddr15 = apb_paddr_common;
+    always_comb begin
+        for (int i = 0; i < 16; i++) begin
+            apb_paddr[i] = apb_paddr_common;
+        end
+    end
     
     // Write signal - common to all slaves
     logic apb_pwrite_common;
     assign apb_pwrite_common = host_write_r;
     
     // Distribute common write signal to all slaves
-    assign apb_pwrite0 = apb_pwrite_common;
-    assign apb_pwrite1 = apb_pwrite_common;
-    assign apb_pwrite2 = apb_pwrite_common;
-    assign apb_pwrite3 = apb_pwrite_common;
-    assign apb_pwrite4 = apb_pwrite_common;
-    assign apb_pwrite5 = apb_pwrite_common;
-    assign apb_pwrite6 = apb_pwrite_common;
-    assign apb_pwrite7 = apb_pwrite_common;
-    assign apb_pwrite8 = apb_pwrite_common;
-    assign apb_pwrite9 = apb_pwrite_common;
-    assign apb_pwrite10 = apb_pwrite_common;
-    assign apb_pwrite11 = apb_pwrite_common;
-    assign apb_pwrite12 = apb_pwrite_common;
-    assign apb_pwrite13 = apb_pwrite_common;
-    assign apb_pwrite14 = apb_pwrite_common;
-    assign apb_pwrite15 = apb_pwrite_common;
+    always_comb begin
+        for (int i = 0; i < 16; i++) begin
+            apb_pwrite[i] = apb_pwrite_common;
+        end
+    end
     
     // -----------------------------------------------------------------------
     // Write Data Distribution
@@ -467,43 +241,21 @@ module apb_bridge_top (
     logic [31:0] apb_pwdata_common;
     assign apb_pwdata_common = host_wdata_r;
     
-    assign apb_pwdata0 = apb_pwdata_common;
-    assign apb_pwdata1 = apb_pwdata_common;
-    assign apb_pwdata2 = apb_pwdata_common;
-    assign apb_pwdata3 = apb_pwdata_common;
-    assign apb_pwdata4 = apb_pwdata_common;
-    assign apb_pwdata5 = apb_pwdata_common;
-    assign apb_pwdata6 = apb_pwdata_common;
-    assign apb_pwdata7 = apb_pwdata_common;
-    assign apb_pwdata8 = apb_pwdata_common;
-    assign apb_pwdata9 = apb_pwdata_common;
-    assign apb_pwdata10 = apb_pwdata_common;
-    assign apb_pwdata11 = apb_pwdata_common;
-    assign apb_pwdata12 = apb_pwdata_common;
-    assign apb_pwdata13 = apb_pwdata_common;
-    assign apb_pwdata14 = apb_pwdata_common;
-    assign apb_pwdata15 = apb_pwdata_common;
+    always_comb begin
+        for (int i = 0; i < 16; i++) begin
+            apb_pwdata[i] = apb_pwdata_common;
+        end
+    end
     
     // Write strobes
     logic [3:0] apb_pstrb_common;
     assign apb_pstrb_common = host_wstrb_r;
     
-    assign apb_pstrb0 = apb_pstrb_common;
-    assign apb_pstrb1 = apb_pstrb_common;
-    assign apb_pstrb2 = apb_pstrb_common;
-    assign apb_pstrb3 = apb_pstrb_common;
-    assign apb_pstrb4 = apb_pstrb_common;
-    assign apb_pstrb5 = apb_pstrb_common;
-    assign apb_pstrb6 = apb_pstrb_common;
-    assign apb_pstrb7 = apb_pstrb_common;
-    assign apb_pstrb8 = apb_pstrb_common;
-    assign apb_pstrb9 = apb_pstrb_common;
-    assign apb_pstrb10 = apb_pstrb_common;
-    assign apb_pstrb11 = apb_pstrb_common;
-    assign apb_pstrb12 = apb_pstrb_common;
-    assign apb_pstrb13 = apb_pstrb_common;
-    assign apb_pstrb14 = apb_pstrb_common;
-    assign apb_pstrb15 = apb_pstrb_common;
+    always_comb begin
+        for (int i = 0; i < 16; i++) begin
+            apb_pstrb[i] = apb_pstrb_common;
+        end
+    end
     
     // Response multiplexer
     always_comb begin
@@ -514,88 +266,9 @@ module apb_bridge_top (
         
         if (valid_slave_sel) begin
             // Select appropriate slave responses based on the slave index
-case (slave_sel)
-                4'h0: begin
-                    selected_pready = apb_pready0;
-                    selected_prdata = apb_prdata0;
-                    selected_pslverr = apb_pslverr0;
-                end
-                4'h1: begin
-                    selected_pready = apb_pready1;
-                    selected_prdata = apb_prdata1;
-                    selected_pslverr = apb_pslverr1;
-                end
-                4'h2: begin
-                    selected_pready = apb_pready2;
-                    selected_prdata = apb_prdata2;
-                    selected_pslverr = apb_pslverr2;
-                end
-                4'h3: begin
-                    selected_pready = apb_pready3;
-                    selected_prdata = apb_prdata3;
-                    selected_pslverr = apb_pslverr3;
-                end
-                4'h4: begin
-                    selected_pready = apb_pready4;
-                    selected_prdata = apb_prdata4;
-                    selected_pslverr = apb_pslverr4;
-                end
-                4'h5: begin
-                    selected_pready = apb_pready5;
-                    selected_prdata = apb_prdata5;
-                    selected_pslverr = apb_pslverr5;
-                end
-                4'h6: begin
-                    selected_pready = apb_pready6;
-                    selected_prdata = apb_prdata6;
-                    selected_pslverr = apb_pslverr6;
-                end
-                4'h7: begin
-                    selected_pready = apb_pready7;
-                    selected_prdata = apb_prdata7;
-                    selected_pslverr = apb_pslverr7;
-                end
-                4'h8: begin
-                    selected_pready = apb_pready8;
-                    selected_prdata = apb_prdata8;
-                    selected_pslverr = apb_pslverr8;
-                end
-                4'h9: begin
-                    selected_pready = apb_pready9;
-                    selected_prdata = apb_prdata9;
-                    selected_pslverr = apb_pslverr9;
-                end
-                4'hA: begin
-                    selected_pready = apb_pready10;
-                    selected_prdata = apb_prdata10;
-                    selected_pslverr = apb_pslverr10;
-                end
-                4'hB: begin
-                    selected_pready = apb_pready11;
-                    selected_prdata = apb_prdata11;
-                    selected_pslverr = apb_pslverr11;
-                end
-                4'hC: begin
-                    selected_pready = apb_pready12;
-                    selected_prdata = apb_prdata12;
-                    selected_pslverr = apb_pslverr12;
-                end
-                4'hD: begin
-                    selected_pready = apb_pready13;
-                    selected_prdata = apb_prdata13;
-                    selected_pslverr = apb_pslverr13;
-                end
-                4'hE: begin
-                    selected_pready = apb_pready14;
-                    selected_prdata = apb_prdata14;
-                    selected_pslverr = apb_pslverr14;
-                end
-                4'hF: begin
-                    selected_pready = apb_pready15;
-                    selected_prdata = apb_prdata15;
-                    selected_pslverr = apb_pslverr15;
-                end
-            endcase
+            selected_pready = apb_pready[slave_sel];
+            selected_prdata = apb_prdata[slave_sel];
+            selected_pslverr = apb_pslverr[slave_sel];
         end
     end
     
