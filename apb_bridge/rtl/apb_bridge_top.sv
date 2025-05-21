@@ -13,6 +13,9 @@
  *
  * Each slave gets a 16MB address region.
  */
+
+/* verilator lint_off EOFNEWLINE */
+/* verilator lint_off UNUSEDSIGNAL */ // For host_addr[31:28] which are not used by this bridge
 module apb_bridge_top (
     // Clock and resets
     input logic       sys_clk,          // System clock
@@ -25,6 +28,7 @@ module apb_bridge_top (
     input logic [31:0] host_wdata,      // Transaction write data
     input logic [3:0]  host_wstrb,      // Transaction write strobe (byte enables)
     output logic [31:0] host_rdata,     // Transaction read data
+    output logic       host_slverr,     // Host slave error indication
 
     // APB Master Interfaces (to 16 Peripherals)
     output logic [23:0] apb_paddr   [15:0], // APB address bus
@@ -37,6 +41,7 @@ module apb_bridge_top (
     input  logic        apb_pready  [15:0], // Ready signal from slave
     input  logic        apb_pslverr [15:0]  // Slave error response
 );
+/* verilator lint_on UNUSEDSIGNAL */
 
     // -----------------------------------------------------------------------
     // APB Transaction State Machine
@@ -62,7 +67,7 @@ module apb_bridge_top (
     // These registers capture and hold the host interface signals
     // for stability during the APB transaction
     // -----------------------------------------------------------------------
-    logic [31:0] host_addr_r;   // Registered address from host
+    logic [27:0] host_addr_r;   // Registered address from host (only up to bit 27 needed)
     logic [31:0] host_wdata_r;  // Registered write data from host
     logic [3:0]  host_wstrb_r;  // Registered write strobes from host
     logic        host_write_r;  // Derived write/read indicator
@@ -88,7 +93,7 @@ module apb_bridge_top (
         if (!rst_n) begin
             // Reset state
             curr_state <= IDLE;
-            host_addr_r <= 32'h0;
+            host_addr_r <= 28'h0; // Adjusted for 28-bit width
             host_wdata_r <= 32'h0;
             host_wstrb_r <= 4'h0;
             host_write_r <= 1'b0;
@@ -98,7 +103,7 @@ module apb_bridge_top (
             
             // Capture host signals on valid transaction in IDLE state
             if (curr_state == IDLE && host_valid) begin
-                host_addr_r <= host_addr;
+                host_addr_r <= host_addr[27:0]; // Capture only relevant bits
                 host_wdata_r <= host_wdata;
                 host_wstrb_r <= host_wstrb;
                 host_write_r <= |host_wstrb; // Write if any write strobe is active
@@ -154,6 +159,7 @@ module apb_bridge_top (
     // Extracts the slave select bits from the address
     // Each slave gets a 16MB address region (24 bits)
     // Bits [27:24] determine which slave is selected
+    // (These bits are from the original host_addr, now host_addr_r[27:24])
     // -----------------------------------------------------------------------
     always_comb begin
         // Extract the slave select bits from address
@@ -276,5 +282,7 @@ module apb_bridge_top (
     // Host Interface Response
     assign host_ready = (curr_state == COMPLETE);
     assign host_rdata = selected_prdata; // Pass through selected peripheral response
+    assign host_slverr = (curr_state == COMPLETE) ? selected_pslverr : 1'b0; // Pass through slave error on completion
 
 endmodule // apb_bridge_top
+/* verilator lint_on EOFNEWLINE */

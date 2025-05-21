@@ -1,3 +1,4 @@
+/* verilator lint_off EOFNEWLINE */
 module apb_bridge_tb;
 
     // Clock and reset
@@ -11,14 +12,17 @@ module apb_bridge_tb;
     logic [31:0] host_wdata;
     logic [3:0]  host_wstrb;
     logic [31:0] host_rdata;
+    logic        host_slverr; // For the new slave error output
     
     // APB Master Interface signals for 16 peripherals 
     logic [23:0] apb_paddr   [15:0];
     logic        apb_pwrite  [15:0];
     logic        apb_psel    [15:0];
     logic        apb_penable [15:0];
+    /* verilator lint_off UNUSEDSIGNAL */ // These are DUT outputs, TB just wires them
     logic [3:0]  apb_pstrb   [15:0];
     logic [31:0] apb_pwdata  [15:0];
+    /* verilator lint_on UNUSEDSIGNAL */
     logic [31:0] apb_prdata  [15:0];
     logic        apb_pready  [15:0];
     logic        apb_pslverr [15:0];
@@ -35,6 +39,7 @@ module apb_bridge_tb;
         .host_wdata(host_wdata),
         .host_wstrb(host_wstrb),
         .host_rdata(host_rdata),
+        .host_slverr(host_slverr), 
         
         // APB Master Interfaces (to 16 Peripherals)
         .apb_paddr(apb_paddr),
@@ -181,6 +186,7 @@ module apb_bridge_tb;
         host_addr = 32'h0;
         host_wdata = 32'h0;
         host_wstrb = 4'h0;
+        // host_slverr will be driven by the DUT
         
         // Release reset
         #20;
@@ -204,10 +210,10 @@ module apb_bridge_tb;
         read_transaction(32'h00123456, read_data);
         expected_rdata = {8'hA0, 24'h123456}; // Peripheral 0 returns A0 prefix + address
         
-        if (read_data == expected_rdata) begin
-            $display("✓ TEST PASSED: Read data 0x%h matches expected value 0x%h", read_data, expected_rdata);
+        if (read_data == expected_rdata && !host_slverr) begin
+            $display("✓ TEST PASSED: Read data 0x%h matches expected value 0x%h. host_slverr = %b", read_data, expected_rdata, host_slverr);
         end else begin
-            $display("✗ TEST FAILED: Read data 0x%h does not match expected value 0x%h", read_data, expected_rdata);
+            $display("✗ TEST FAILED: Read data 0x%h (expected 0x%h). host_slverr = %b", read_data, expected_rdata, host_slverr);
         end
         
         // Test 2: Access Peripheral 1
@@ -220,10 +226,10 @@ module apb_bridge_tb;
         read_transaction(32'h01ABCDEF, read_data);
         expected_rdata = {8'hB0, 24'hABCDEF}; // Peripheral 1 returns B0 prefix + address
         
-        if (read_data == expected_rdata) begin
-            $display("✓ TEST PASSED: Read data 0x%h matches expected value 0x%h", read_data, expected_rdata);
+        if (read_data == expected_rdata && !host_slverr) begin
+            $display("✓ TEST PASSED: Read data 0x%h matches expected value 0x%h. host_slverr = %b", read_data, expected_rdata, host_slverr);
         end else begin
-            $display("✗ TEST FAILED: Read data 0x%h does not match expected value 0x%h", read_data, expected_rdata);
+            $display("✗ TEST FAILED: Read data 0x%h (expected 0x%h). host_slverr = %b", read_data, expected_rdata, host_slverr);
         end
         
         // Test 3: Access Peripheral 15 (highest index)
@@ -236,10 +242,10 @@ module apb_bridge_tb;
         read_transaction(32'h0F876543, read_data);
         expected_rdata = {8'hF0, 24'h876543}; // Peripheral 15 returns F0 prefix + address
         
-        if (read_data == expected_rdata) begin
-            $display("✓ TEST PASSED: Read data 0x%h matches expected value 0x%h", read_data, expected_rdata);
+        if (read_data == expected_rdata && !host_slverr) begin
+            $display("✓ TEST PASSED: Read data 0x%h matches expected value 0x%h. host_slverr = %b", read_data, expected_rdata, host_slverr);
         end else begin
-            $display("✗ TEST FAILED: Read data 0x%h does not match expected value 0x%h", read_data, expected_rdata);
+            $display("✗ TEST FAILED: Read data 0x%h (expected 0x%h). host_slverr = %b", read_data, expected_rdata, host_slverr);
         end
         
         // Test 4: Test address bits [29:28] are ignored
@@ -255,12 +261,12 @@ module apb_bridge_tb;
             
             expected_rdata = {8'hB0, 24'h234567}; // Should always be the same
             
-            if (read_data == expected_rdata) begin
-                $display("✓ TEST PASSED: Bits [29:28]=%d - Read data 0x%h matches expected value 0x%h", 
-                          i, read_data, expected_rdata);
+            if (read_data == expected_rdata && !host_slverr) begin
+                $display("✓ TEST PASSED: Bits [29:28]=%d - Read data 0x%h matches expected value 0x%h. host_slverr = %b", 
+                          i, read_data, expected_rdata, host_slverr);
             end else begin
-                $display("✗ TEST FAILED: Bits [29:28]=%d - Read data 0x%h does not match expected value 0x%h", 
-                          i, read_data, expected_rdata);
+                $display("✗ TEST FAILED: Bits [29:28]=%d - Read data 0x%h (expected 0x%h). host_slverr = %b", 
+                          i, read_data, expected_rdata, host_slverr);
             end
         end
         
@@ -273,10 +279,10 @@ module apb_bridge_tb;
         read_transaction(32'h00111111, read_data);
         expected_rdata = {8'hA0, 24'h111111};
         
-        if (read_data == expected_rdata) begin
-            $display("✓ Peripheral 0: Read data 0x%h matches expected value 0x%h", read_data, expected_rdata);
+        if (read_data == expected_rdata && !host_slverr) begin
+            $display("✓ Peripheral 0: Read data 0x%h matches expected value 0x%h. host_slverr = %b", read_data, expected_rdata, host_slverr);
         end else begin
-            $display("✗ Peripheral 0: Read data 0x%h does not match expected value 0x%h", read_data, expected_rdata);
+            $display("✗ Peripheral 0: Read data 0x%h (expected 0x%h). host_slverr = %b", read_data, expected_rdata, host_slverr);
         end
         
         // Next peripheral 1
@@ -284,10 +290,10 @@ module apb_bridge_tb;
         read_transaction(32'h01222222, read_data);
         expected_rdata = {8'hB0, 24'h222222};
         
-        if (read_data == expected_rdata) begin
-            $display("✓ Peripheral 1: Read data 0x%h matches expected value 0x%h", read_data, expected_rdata);
+        if (read_data == expected_rdata && !host_slverr) begin
+            $display("✓ Peripheral 1: Read data 0x%h matches expected value 0x%h. host_slverr = %b", read_data, expected_rdata, host_slverr);
         end else begin
-            $display("✗ Peripheral 1: Read data 0x%h does not match expected value 0x%h", read_data, expected_rdata);
+            $display("✗ Peripheral 1: Read data 0x%h (expected 0x%h). host_slverr = %b", read_data, expected_rdata, host_slverr);
         end
         
         // Finally peripheral 15
@@ -295,10 +301,10 @@ module apb_bridge_tb;
         read_transaction(32'h0F333333, read_data);
         expected_rdata = {8'hF0, 24'h333333};
         
-        if (read_data == expected_rdata) begin
-            $display("✓ Peripheral 15: Read data 0x%h matches expected value 0x%h", read_data, expected_rdata);
+        if (read_data == expected_rdata && !host_slverr) begin
+            $display("✓ Peripheral 15: Read data 0x%h matches expected value 0x%h. host_slverr = %b", read_data, expected_rdata, host_slverr);
         end else begin
-            $display("✗ Peripheral 15: Read data 0x%h does not match expected value 0x%h", read_data, expected_rdata);
+            $display("✗ Peripheral 15: Read data 0x%h (expected 0x%h). host_slverr = %b", read_data, expected_rdata, host_slverr);
         end
         
         // Finish simulation
@@ -314,3 +320,4 @@ module apb_bridge_tb;
     end
 
 endmodule
+/* verilator lint_on EOFNEWLINE */
