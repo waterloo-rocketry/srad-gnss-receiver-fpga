@@ -21,4 +21,6 @@ module mcu_subsys_sram (
         end
     end
 
+    initial $readmemh("../../firmware/fw-data.hex", mem);
+
 endmodule // mcu_subsys_sram

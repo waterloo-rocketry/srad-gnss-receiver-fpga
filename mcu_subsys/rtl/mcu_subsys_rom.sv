@@ -13,6 +13,6 @@ module mcu_subsys_rom (
     assign mem_ready = 1'b1;
     assign mem_rdata = rom[mem_addr[15:2]];
 
-    initial $readmemh("../../firmware/fw.hex", rom);
+    initial $readmemh("../../firmware/fw-text.hex", rom);
 
 endmodule // mcu_subsys_rom
